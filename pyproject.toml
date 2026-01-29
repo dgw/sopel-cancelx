@@ -14,7 +14,7 @@ readme = { file=["README.md", "NEWS"], content-type="text/markdown" }
 
 [project]
 name = "sopel-cancelx"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Sopel plugin to cancel X links"
 
 authors = [

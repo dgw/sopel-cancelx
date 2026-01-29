@@ -48,15 +48,10 @@ def _twitter_alt_domains():
         :return: A list of compiled regexes
         :rtype: List[re.Pattern]
         """
-        # Use a set to mitigate overlap between the two plugins' settings
+        # Use a set to mitigate duplicate entries
         patterns = set()
         for domain in settings.cancelx.alternate_domains:
             patterns.add(r"https?://{}/".format(re.escape(domain)))
-
-        # also use sopel-twitter's domain patterns, if it's enabled
-        if 'twitter' in settings and 'alternate_domains' in settings.twitter:
-            for domain in settings.twitter.alternate_domains:
-                patterns.add(r"https?://{}/".format(re.escape(domain)))
 
         return [
             re.compile(pattern) for pattern in patterns
