@@ -5,13 +5,19 @@ A Sopel plugin to cancel X links
 from __future__ import annotations
 
 import re
+from typing import TYPE_CHECKING
 from urllib.parse import urlparse, urlunparse
 
 from sopel import config, plugin
 from sopel.config import types
 
 
-DOMAIN_REGEX = r"https?://(?:(?:www|m(?:obile)?)\.)?(?:twitter|x)\.com/"
+if TYPE_CHECKING:
+    from sopel import bot, trigger
+
+
+DOMAIN_REGEX = r"(?P<url>https?://(?:(?:www|m(?:obile)?)\.)?(?:twitter|x)\.com/\S+)"
+OUTPUT_PREFIX = '[X Cancelled] '
 
 
 class CancelXSection(types.StaticSection):
@@ -51,7 +57,7 @@ def _twitter_alt_domains():
         # Use a set to mitigate duplicate entries
         patterns = set()
         for domain in settings.cancelx.alternate_domains:
-            patterns.add(r"https?://{}/".format(re.escape(domain)))
+            patterns.add(r"(?P<url>https?://{}/\S+)".format(re.escape(domain)))
 
         return [
             re.compile(pattern) for pattern in patterns
@@ -63,7 +69,7 @@ def _twitter_alt_domains():
 
 def _cancel_x_link(url: str) -> str:
     """Cancel a ``url`` (modify it to use ``xcancel.com``).
-    
+
     Returns empty string if the URL is already cancelled.
     """
     parsed = urlparse(url)
@@ -73,12 +79,12 @@ def _cancel_x_link(url: str) -> str:
     canceled_netloc = 'xcancel.com'
     if parsed.port:
         canceled_netloc += f":{parsed.port}"
-    return urlunparse(parsed._replace(netloc=canceled_netloc))
+    return urlunparse(parsed._replace(scheme='https', netloc=canceled_netloc))
 
 
 @plugin.url_lazy(_twitter_alt_domains())
 @plugin.url(DOMAIN_REGEX)
-@plugin.output_prefix('[X Cancelled] ')
-def cancel_x_links(bot, trigger):
-    if canceled_link := _cancel_x_link(trigger):
+@plugin.output_prefix(OUTPUT_PREFIX)
+def cancel_x_links(bot: bot.Sopel, trigger: trigger.Trigger):
+    if canceled_link := _cancel_x_link(trigger.group(1)):
         bot.say(canceled_link)
