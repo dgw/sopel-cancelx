@@ -1,5 +1,10 @@
 ## Changelog
 
+### 0.1.2
+
+Tighten up matching; add manually-run test suite.
+
+
 ### 0.1.1
 
 Remove partially broken import of `alternate_domains` from `sopel-twitter`.
