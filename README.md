@@ -2,23 +2,6 @@
 
 A Sopel plugin to cancel X links
 
-## Project archival
-
-> [!IMPORTANT]
-> This plugin is unmaintained.
-
-Nitter, XCancel, and probably others got legal notices from X Corp. in late August
-2026. From XCancel's homepage:
-
-> On Monday 24th August at 8PM EST, we received at letter from X Corp. asking to cease and desist the service XCancel.\
-> The service XCancel is stopped until further notice.\
-> We are seeking legal advice and won't share more details for now.\
-> Thank you for the trust you have put in these two years of XCancel.
-
-Since it no longer has an alternate front-end to point at, this plugin has been
-archived on GitHub and PyPI. Open to resurrecting it if circumstances improve.
-— 2026-08-26
-
 ## Installing
 
 Releases are hosted on PyPI, so after installing Sopel, all you need is `pip`:
