@@ -1,5 +1,10 @@
 ## Changelog
 
+### 0.2.0
+
+Add config setting to choose a replacement domain other than `xcancel.com`.
+
+
 ### 0.1.2
 
 Tighten up matching; add manually-run test suite.
