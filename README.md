@@ -34,7 +34,9 @@ The domain name to use when canceling a link. Defaults to `xcancel.com`, but can
 be customized in case of upstream availability issues.
 
 Note that this plugin _only_ changes the domain; services using a URL structure
-differing from Twitter/XCancel themselves are not currently supported.
+differing from Twitter/XCancel themselves are not currently supported. As of
+September 2026, a small list of compatible public instances is available at
+[status.d420.de](https://status.d420.de/).
 
 ## Using
 
