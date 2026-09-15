@@ -25,6 +25,10 @@ class CancelXSection(types.StaticSection):
         "alternate_domains",
         default=["vxtwitter.com", "fixvx.com", "nitter.net"],
     )
+    replacement_domain = types.ValidatedAttribute(
+        "replacement_domain",
+        default="xcancel.com",
+    )
 
 
 def setup(bot):
@@ -36,6 +40,10 @@ def configure(settings):
     settings.cancelx.configure_setting(
         'alternate_domains',
         'List of alternate X/Twitter domains to cancel (one per line).',
+    )
+    settings.cancelx.configure_setting(
+        'replacement_domain',
+        'The domain to use for cancelled X/Twitter links.',
     )
 
 
@@ -61,30 +69,30 @@ def _twitter_alt_domains():
 
         return [
             re.compile(pattern) for pattern in patterns
-            if '//xcancel.com/' not in pattern
+            if f'//{re.escape(settings.cancelx.replacement_domain)}/' not in pattern
         ]
 
     return loader
 
 
-def _cancel_x_link(url: str) -> str:
+def _cancel_x_link(url: str, replacement_domain: str = "xcancel.com") -> str:
     """Cancel a ``url`` (modify it to use ``xcancel.com``).
 
     Returns empty string if the URL is already cancelled.
     """
     parsed = urlparse(url)
-    if parsed.hostname == 'xcancel.com':
+    if parsed.hostname == replacement_domain:
         return ''  # Already cancelled
 
-    canceled_netloc = 'xcancel.com'
     if parsed.port:
-        canceled_netloc += f":{parsed.port}"
-    return urlunparse(parsed._replace(scheme='https', netloc=canceled_netloc))
+        replacement_domain += f":{parsed.port}"
+    return urlunparse(parsed._replace(scheme='https', netloc=replacement_domain))
 
 
 @plugin.url_lazy(_twitter_alt_domains())
 @plugin.url(DOMAIN_REGEX)
 @plugin.output_prefix(OUTPUT_PREFIX)
 def cancel_x_links(bot: bot.Sopel, trigger: trigger.Trigger):
-    if canceled_link := _cancel_x_link(trigger.group(1)):
+    replacement_domain = bot.settings.cancelx.replacement_domain
+    if canceled_link := _cancel_x_link(trigger.group(1), replacement_domain):
         bot.say(canceled_link)
