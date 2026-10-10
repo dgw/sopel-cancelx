@@ -27,7 +27,7 @@ class CancelXSection(types.StaticSection):
     )
     replacement_domain = types.ValidatedAttribute(
         "replacement_domain",
-        default="xcancel.com",
+        default="twiiit.com",
     )
 
 

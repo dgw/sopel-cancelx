@@ -30,12 +30,13 @@ config file.
 
 ### `replacement_domain`
 
-The domain name to use when canceling a link. Defaults to `xcancel.com`, but can
-be customized in case of upstream availability issues.
+The domain name to use when canceling a link. Defaults to `twiiit.com` (will
+redirect to a random Nitter instance, backed by at least some health-checking),
+but can be customized to use your favorite or a self-hosted instance.
 
 Note that this plugin _only_ changes the domain; services using a URL structure
-differing from Twitter/XCancel themselves are not currently supported. As of
-September 2026, a small list of compatible public instances is available at
+differing from Twitter/Nitter themselves are not currently supported. As of
+October 2026, a small list of compatible public instances is available at
 [status.d420.de](https://status.d420.de/).
 
 ## Using
@@ -44,6 +45,6 @@ Post a link to Twitter and watch Sopel automatically provide a canceled version:
 
 ```
 <dgw> https://x.com/i/status/2016567703478194406
-<SopelTest> [X Cancelled] https://xcancel.com/i/status/2016567703478194406
+<SopelTest> [X Cancelled] https://twiiit.com/i/status/2016567703478194406
 <dgw> the link that started me down this path, vanquished!
 ```

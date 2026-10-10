@@ -1,5 +1,11 @@
 ## Changelog
 
+### 0.2.1
+
+Change default `replacement_domain` from `xcancel.com` to `twiiit.com`, as it's
+unclear whether XCancel will ever resume normal operations.
+
+
 ### 0.2.0
 
 Add config setting to choose a replacement domain other than `xcancel.com`.
