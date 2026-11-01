@@ -92,6 +92,7 @@ def _cancel_x_link(url: str, replacement_domain: str = "xcancel.com") -> str:
 @plugin.url_lazy(_twitter_alt_domains())
 @plugin.url(DOMAIN_REGEX)
 @plugin.output_prefix(OUTPUT_PREFIX)
+@plugin.echo  # sometimes reddit, HN, etc. submissions the bot expands are X links
 def cancel_x_links(bot: bot.Sopel, trigger: trigger.Trigger):
     replacement_domain = bot.settings.cancelx.replacement_domain
     if canceled_link := _cancel_x_link(trigger.group(1), replacement_domain):
