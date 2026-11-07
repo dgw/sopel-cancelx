@@ -1,5 +1,10 @@
 ## Changelog
 
+### 0.3.0
+
+Start listening to other plugins' output for cancelable links.
+
+
 ### 0.2.1
 
 Change default `replacement_domain` from `xcancel.com` to `twiiit.com`, as it's
