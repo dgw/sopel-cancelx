@@ -18,16 +18,22 @@ if TYPE_CHECKING:
 
 DOMAIN_REGEX = r"(?P<url>https?://(?:(?:www|m(?:obile)?)\.)?(?:twitter|x)\.com/\S+)"
 OUTPUT_PREFIX = '[X Cancelled] '
+DEFAULT_REPLACEMENT_DOMAIN = "twiiit.com"
+DEFAULT_ALTERNATE_DOMAINS = [
+    "vxtwitter.com",
+    "fixvx.com",
+    "nitter.net",
+]
 
 
 class CancelXSection(types.StaticSection):
     alternate_domains = types.ListAttribute(
         "alternate_domains",
-        default=["vxtwitter.com", "fixvx.com", "nitter.net"],
+        default=DEFAULT_ALTERNATE_DOMAINS,
     )
     replacement_domain = types.ValidatedAttribute(
         "replacement_domain",
-        default="twiiit.com",
+        default=DEFAULT_REPLACEMENT_DOMAIN,
     )
 
 
@@ -75,8 +81,8 @@ def _twitter_alt_domains():
     return loader
 
 
-def _cancel_x_link(url: str, replacement_domain: str = "xcancel.com") -> str:
-    """Cancel a ``url`` (modify it to use ``xcancel.com``).
+def _cancel_x_link(url: str, replacement_domain: str = DEFAULT_REPLACEMENT_DOMAIN) -> str:
+    """Cancel a ``url`` (modify it to use ``replacement_domain``).
 
     Returns empty string if the URL is already cancelled.
     """
